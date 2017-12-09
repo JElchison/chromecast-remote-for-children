@@ -16,7 +16,8 @@ sudo logkeys --start --device="$INPUT_DEV"
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 # control functions
-(sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<Esc\>\" | while read -r; do echo ===== Stop =====; castnow --device "$CHROMECAST_DEV" --command s --exit; done) &
+(sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<Esc\>\" | while read -r; do echo ===== Stop =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; castnow --device "$CHROMECAST_DEV" --command s --exit; done) &
+
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<Tab\>\" | while read -r; do echo ===== Next =====; castnow --device "$CHROMECAST_DEV" --command n --exit; done) &
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP+\>\" | while read -r; do echo ===== Volume Up =====; castnow --device "$CHROMECAST_DEV" --command up --volume-step 0.25 --exit; done) &
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP-\>\" | while read -r; do echo ===== Volume Down =====; castnow --device "$CHROMECAST_DEV" --command down --volume-step 0.25 --exit; done) &
