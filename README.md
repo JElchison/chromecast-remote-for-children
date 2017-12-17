@@ -9,7 +9,7 @@ I am not necessarily advocating for screen time for little ones.  However, if a 
 
 ## Features
 * Plays a designated YouTube video at the push of an associated button
-    * View key mapping in [start.sh]
+    * View key mapping in [start.sh](start.sh)
 * Plays any media supported by [castnow](https://github.com/xat/castnow)
 * Mapped control keys
     * Stop
@@ -31,6 +31,7 @@ Hardware requirements:
 * Wireless keyboard, preferably a numpad only (like those you see inside banks)
 * Chromecast connected to a nearby screen
 * Colored stickers for keys (optional)
+    * Or, just print some color blocks, cut them out, and use 2-sided adhesive tape to affix them.
 
 Things to consider when choosing your keyboard:
 * Wireless
@@ -52,13 +53,13 @@ The following steps are how I setup my Raspberry Pi.  If you're using a differen
 
 * Download, install latest NOOBS to Raspberry Pi
     * Add Raspberry Pi to home Wi-Fi
-* Install Raspbian Lite
+* Install Raspbian Lite (no need for a graphical environment)
 * Run `raspi-config`
     * Update raspi-config
     * Login to CLI on boot (not graphics desktop)
     * Change password
     * Set hostname
-    * Add locale for en_US.utf8
+    * Add your locale to the list of selected locales
     * Set time zone
     * Enable SSH
     * Disable VNC
@@ -93,17 +94,24 @@ sudo -H pip install --upgrade youtube-dl
 sudo /sbin/iptables -A INPUT -p udp --dport 5353 -j ACCEPT
 sudo /sbin/iptables -A INPUT -p tcp --match multiport --dports 4100:4105 -j ACCEPT
 ```
-* Compile https://github.com/kernc/logkeys from source (otherwise you'll see) https://github.com/kernc/logkeys/issues/103)
-    * You can install from package manager if you're not on Raspberry Pi
+* Compile https://github.com/kernc/logkeys from source (otherwise you'll see https://github.com/kernc/logkeys/issues/103)
+    * You can install from package manager if you're not on a Raspberry Pi
 * Compile https://github.com/rsharo/bgrep from source
-    * You can install from package manager if you're not on Raspberry Pi
+    * You can install from package manager if you're not on a Raspberry Pi
 
 ## Configuration
 
-Create a file named `config.json`:
+Create a file named `config.json`, with contents like this:
 ```
-TODO example config here
+{
+	"input_dev": "/dev/input/event0",
+	"chromecast_dev": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"
+}
 ```
+
+...where:
+* `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `evtest`.
+* `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix.
 
 ## Ideas for Future Work
 * Use numlock LED for status indicator
@@ -114,7 +122,7 @@ sudo su -c 'setleds -L -num < /dev/console'
 * Lockout by time of day (parental control)
 * Key sequence that causes remote to rotate between available Chromecasts on local network
 * Create "pages" of videos available for playing (mapped to letters marked on keyboard)
-* Move functionality in [start.sh] to single Python script
+* Move functionality in [start.sh](start.sh) to single Python script
     * Key mappings move to config.json
     * When run without any arguments, starts all processes
         * One process per key sequence in JSON
@@ -123,7 +131,7 @@ sudo su -c 'setleds -L -num < /dev/console'
         * Looks up key sequence in JSON, performs associated action
         * All actions passes to system() or equivalent
 
-Ideas for other keyboard mappings
+Ideas for other keyboard mappings:
 * Include Easter egg (like when hit 1-9 in a row, or 1-2 buckle shoe)
 * Wave files for piano keys (major scale)
 * Wave file to say name of every character typed (even symbols), for learning
