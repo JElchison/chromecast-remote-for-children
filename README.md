@@ -32,6 +32,7 @@ Hardware requirements:
 * Chromecast connected to a nearby screen
 * Colored stickers for keys (optional)
     * Or, just print some color blocks, cut them out, and use 2-sided adhesive tape to affix them.
+    * Or, purchase some colored keycaps.
 
 Things to consider when choosing your keyboard:
 * Wireless
@@ -46,6 +47,10 @@ Things to consider when choosing your keyboard:
 Here is the hardware I chose for my first remote:
 * [CanaKit Raspberry Pi 3 Complete Starter Kit - 32 GB Edition](https://www.amazon.com/gp/product/B01C6Q2GSY/)
 * [Mizux Mechanical Numeric Keypad Wireless USB Mini Numpad with Nano Receiver (22-Key)](https://www.amazon.com/gp/product/B0734JHW81/)
+
+![My first remote](https://user-images.githubusercontent.com/1757771/34083863-09bf807c-e345-11e7-8dd7-8f24f0d08d7c.jpg)
+
+The above photo pictures a 100% functioning remote running on a Raspberry Pi 3.  (I added the colored stickers to the keyboard.)  Not pictured is the Chromecast attached to my TV. 
 
 ## Raspberry Pi Setup
 
