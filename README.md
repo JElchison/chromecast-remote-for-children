@@ -55,13 +55,13 @@ The following steps are how I setup my Raspberry Pi.  If you're using a differen
     * Add Raspberry Pi to home Wi-Fi
 * Install Raspbian Lite (no need for a graphical environment)
 * Run `raspi-config`
-    * Update raspi-config
+    * Update raspi-config itself
     * Login to CLI on boot (not graphics desktop)
     * Change password
     * Set hostname
     * Add your locale to the list of selected locales
     * Set time zone
-    * Enable SSH
+    * Enable SSH (if you're running this headless like me)
     * Disable VNC
     * Disable serial
 * Reserve dynamic IP (if you desire to SSH into device after setup)
@@ -110,7 +110,7 @@ Create a file named `config.json`, with contents like this:
 ```
 
 ...where:
-* `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `evtest`.
+* `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `sudo evtest`.
 * `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix.
 
 ## Ideas for Future Work
@@ -135,5 +135,5 @@ Ideas for other keyboard mappings:
 * Include Easter egg (like when hit 1-9 in a row, or 1-2 buckle shoe)
 * Wave files for piano keys (major scale)
 * Wave file to say name of every character typed (even symbols), for learning
-* PAC-MAN game (using arrows on keypad)
-* [Simon Says game](http://labs.uxmonk.com/simon-says/)
+* [PAC-MAN game](http://pacman.platzh1rsch.ch/) (play using arrows on keypad)
+* [Simon memory game](http://labs.uxmonk.com/simon-says/) (play using numbers on keypad, may conflict with colored stickers)
