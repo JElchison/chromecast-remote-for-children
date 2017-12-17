@@ -24,7 +24,7 @@ trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP0\>\" | while read -r; do echo ===== Playing Polaroid Memories =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; youtube-dl -o - https://www.youtube.com/watch?v=shNP5H13a1M | castnow --device "$CHROMECAST_DEV" --quiet -; done) &
 
-(sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP1\>\" | while read -r; do echo ===== Playing Claymation Christmas =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; youtube-dl --playlist-random -o - https://www.youtube.com/playlist?list=PLd6uqVNEu-peflL0eT4lOwVrRnshaod98 | castnow --device "$CHROMECAST_DEV" --quiet -; done) &
+(sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP1\>\" | while read -r; do echo ===== Playing Claymation Christmas =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; youtube-dl -o - https://www.youtube.com/playlist?list=PLd6uqVNEu-peflL0eT4lOwVrRnshaod98 | castnow --device "$CHROMECAST_DEV" --quiet -; done) &
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP2\>\" | while read -r; do echo ===== Playing The Snowman =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; youtube-dl -o - https://www.youtube.com/watch?v=ZE9KpobX9J8 | castnow --device "$CHROMECAST_DEV" --quiet -; done) &
 (sudo tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \"\<KP3\>\" | while read -r; do echo ===== Playing Carl the Super Truck =====; ps ax | grep castnow | grep node | awk '{print $1}' | xargs kill; youtube-dl -o - https://www.youtube.com/watch?v=JUeru7ioMyk | castnow --device "$CHROMECAST_DEV" --quiet -; done) &
 
