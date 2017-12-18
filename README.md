@@ -50,7 +50,7 @@ Here is the hardware I chose for my first remote:
 
 ![My first remote](https://user-images.githubusercontent.com/1757771/34083863-09bf807c-e345-11e7-8dd7-8f24f0d08d7c.jpg)
 
-The above photo pictures a 100% functioning remote running on a Raspberry Pi 3.  (I added the colored stickers to the keyboard.)  Not pictured is the Chromecast attached to my TV. 
+The above photo pictures a 100% functioning remote running on a Raspberry Pi 3.  (I added the colored stickers to the keyboard.)  Not pictured is the Chromecast attached to my TV.
 
 ## Raspberry Pi Setup
 
@@ -116,7 +116,7 @@ Create a file named `config.json`, with contents like this:
 
 ...where:
 * `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `sudo evtest`.
-* `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix.
+* `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix (including any dashes).
 
 ## Ideas for Future Work
 * Use numlock LED for status indicator
