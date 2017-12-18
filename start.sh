@@ -8,6 +8,7 @@ LOG_FILE=/var/log/logkeys.log
 CONFIG_JSON=config.json
 INPUT_DEV=$(jq -r '.input_dev' $CONFIG_JSON)
 CHROMECAST_DEV=$(jq -r '.chromecast_dev' $CONFIG_JSON)
+VOLUME_STEP=0.25
 
 killall_castnow_processes() {
     pkill -f 'node.*castnow'
@@ -35,28 +36,28 @@ sudo bash -c "while :; do
     tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \\\"\<Esc\>\\\" | while read -r; do
         echo ===== Stop =====
         killall_castnow_processes
-        castnow --device \"$CHROMECAST_DEV\" --command s --exit
+        castnow --device $CHROMECAST_DEV --command s --exit
     done
 done" &
 
 sudo bash -c "while :; do
     tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \\\"\<Tab\>\\\" | while read -r; do
         echo ===== Next =====
-        castnow --device \"$CHROMECAST_DEV\" --command n --exit
+        castnow --device $CHROMECAST_DEV --command n --exit
     done
 done" &
 
 sudo bash -c "while :; do
     tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \\\"\<KP+\>\\\" | while read -r; do
         echo ===== Volume Up =====
-        castnow --device \"$CHROMECAST_DEV\" --command up --volume-step 0.25 --exit
+        castnow --device $CHROMECAST_DEV --command up --volume-step $VOLUME_STEP --exit
     done
 done" &
 
 sudo bash -c "while :; do
     tail -f -n0 $LOG_FILE | stdbuf -o0 bgrep -b \\\"\<KP-\>\\\" | while read -r; do
         echo ===== Volume Down =====
-        castnow --device \"$CHROMECAST_DEV\" --command down --volume-step 0.25 --exit
+        castnow --device $CHROMECAST_DEV --command down --volume-step $VOLUME_STEP --exit
     done
 done" &
 
