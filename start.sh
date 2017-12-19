@@ -10,17 +10,22 @@ INPUT_DEV=$(jq -r '.input_dev' $CONFIG_JSON)
 CHROMECAST_DEV=$(jq -r '.chromecast_dev' $CONFIG_JSON)
 VOLUME_STEP=0.25
 
+
 killall_castnow_processes() {
     pkill -f 'node.*castnow'
 }
+export -f killall_castnow_processes
 
 play_youtube() {
     youtube-dl -o - "$1" | castnow --device "$CHROMECAST_DEV" --quiet -
 }
+export -f play_youtube
 
 play_youtube_playlist_random() {
     youtube-dl --playlist-random -o - "$1" | castnow --device "$CHROMECAST_DEV" --quiet -
 }
+export -f play_youtube_playlist_random
+
 
 # start keylogger
 sudo logkeys --start --device="$INPUT_DEV"
