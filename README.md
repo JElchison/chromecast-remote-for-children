@@ -129,6 +129,7 @@ Create a file named `config.json`, with contents like this:
 ## Service Installation
 
 The following steps install this as a service (so that it automatically starts upon boot).  It assumes that you have cloned the repo at `/home/pi/chromecast-remote-for-children/`
+
 * Copy the service file
 ```
 sudo cp -fv /home/pi/chromecast-remote-for-children/chromecast-remote-for-children.service /etc/systemd/system/
@@ -240,6 +241,11 @@ Dec 19 12:39:36 d-mote start.sh[2454]: + read -r
 To see logs from the service:
 ```
 journalctl -u chromecast-remote-for-children.service
+```
+
+To setup log rotation:
+```
+sudo cp -fv /home/pi/chromecast-remote-for-children/chromecast-remote-for-children.logrotate /etc/logrotate.d/chromecast-remote-for-children
 ```
 
 ## Updating Dependencies
