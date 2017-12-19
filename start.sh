@@ -163,5 +163,5 @@ sudo bash -c "while :; do
         killall_castnow_processes
         play_youtube https://www.youtube.com/watch?v=qS7nqwGt4-I
     done
-done" &
+done"
 # last command here intentionally missing '&'
