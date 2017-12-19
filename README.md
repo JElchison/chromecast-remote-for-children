@@ -119,6 +119,122 @@ Create a file named `config.json`, with contents like this:
 * `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `sudo evtest`.
 * `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix (including any dashes).
 
+## Service
+
+The following steps install this as a service (so that it automatically starts upon boot).  It assumes that you have cloned the repo at `/home/pi/chromecast-remote-for-children/`
+* Copy the service file
+```
+sudo cp -fv /home/pi/chromecast-remote-for-children/chromecast-remote-for-children.service /etc/systemd/system/
+```
+* Tell systemd about the new service
+```
+sudo systemctl daemon-reload
+```
+* Enable the service upon reboot
+```
+sudo systemctl enable chromecast-remote-for-children.service
+```
+* Start the service
+```
+sudo systemctl start chromecast-remote-for-children.service
+```
+
+To see the status of the service:
+```
+systemctl status chromecast-remote-for-children.service
+```
+
+It's normal for the status to show a ton of child processes.  See [start.sh](start.sh) if you're interested in seeing why.  Example output:
+```
+● chromecast-remote-for-children.service - Chromecast Remote for Children
+   Loaded: loaded (/etc/systemd/system/chromecast-remote-for-children.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2017-12-19 12:39:36 EST; 3s ago
+  Process: 2346 ExecStop=/home/pi/chromecast-remote-for-children/stop.sh (code=exited, status=0/SUCCESS)
+ Main PID: 2454 (start.sh)
+   CGroup: /system.slice/chromecast-remote-for-children.service
+           ├─2454 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2477 logkeys --start --device=/dev/input/event0
+           ├─2486 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2487 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2488 tail -f -n0 /var/log/logkeys.log
+           ├─2489 bgrep -b "<Esc>"
+           ├─2490 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2491 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2492 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2493 tail -f -n0 /var/log/logkeys.log
+           ├─2494 bgrep -b "<KP+>"
+           ├─2495 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2496 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2497 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2498 tail -f -n0 /var/log/logkeys.log
+           ├─2499 bgrep -b "<KP0>"
+           ├─2500 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2501 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2502 tail -f -n0 /var/log/logkeys.log
+           ├─2503 bgrep -b "<KP1>"
+           ├─2504 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2505 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2506 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2507 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2508 tail -f -n0 /var/log/logkeys.log
+           ├─2509 bgrep -b "<KP4>"
+           ├─2510 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2511 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2512 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2513 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2514 tail -f -n0 /var/log/logkeys.log
+           ├─2515 bgrep -b "<KP7>"
+           ├─2516 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2517 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2518 tail -f -n0 /var/log/logkeys.log
+           ├─2519 bgrep -b "<KP8>"
+           ├─2520 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2521 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2522 tail -f -n0 /var/log/logkeys.log
+           ├─2523 bgrep -b "<KP*>"
+           ├─2524 tail -f -n0 /var/log/logkeys.log
+           ├─2525 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2526 bgrep -b "<KP/>"
+           ├─2527 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2528 tail -f -n0 /var/log/logkeys.log
+           ├─2529 bgrep -b "<Tab>"
+           ├─2530 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2531 tail -f -n0 /var/log/logkeys.log
+           ├─2532 bgrep -b "<KP5>"
+           ├─2533 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2534 tail -f -n0 /var/log/logkeys.log
+           ├─2535 bgrep -b "<KP6>"
+           ├─2536 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2537 tail -f -n0 /var/log/logkeys.log
+           ├─2538 bgrep -b "<KP3>"
+           ├─2539 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2540 tail -f -n0 /var/log/logkeys.log
+           ├─2541 bgrep -b "<KP2>"
+           ├─2542 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2543 tail -f -n0 /var/log/logkeys.log
+           ├─2544 bgrep -b "<KP9>"
+           ├─2545 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+           ├─2546 tail -f -n0 /var/log/logkeys.log
+           ├─2547 bgrep -b "<KP->"
+           └─2548 /bin/bash /home/pi/chromecast-remote-for-children/start.sh
+
+Dec 19 12:39:36 d-mote start.sh[2454]: + tail -f -n0 /var/log/logkeys.log
+Dec 19 12:39:36 d-mote start.sh[2454]: + read -r
+Dec 19 12:39:36 d-mote start.sh[2454]: + stdbuf -o0 bgrep -b '"<KP2>"'
+Dec 19 12:39:36 d-mote start.sh[2454]: + tail -f -n0 /var/log/logkeys.log
+Dec 19 12:39:36 d-mote start.sh[2454]: + read -r
+Dec 19 12:39:36 d-mote start.sh[2454]: + stdbuf -o0 bgrep -b '"<KP->"'
+Dec 19 12:39:36 d-mote start.sh[2454]: + tail -f -n0 /var/log/logkeys.log
+Dec 19 12:39:36 d-mote start.sh[2454]: + read -r
+Dec 19 12:39:36 d-mote start.sh[2454]: + stdbuf -o0 bgrep -b '"<KP7>"'
+Dec 19 12:39:36 d-mote start.sh[2454]: + read -r
+```
+
+To see logs from the service:
+```
+journalctl -u chromecast-remote-for-children.service
+```
+
 ## Ideas for Future Work
 * Use numlock LED for status indicator
 ```
