@@ -27,7 +27,7 @@ play_youtube_playlist_random() {
 # start keylogger
 touch $LOG_FILE
 sudo chmod o+r $LOG_FILE
-sudo logkeys --start --device="$INPUT_DEV"
+sudo logkeys --start --device="$INPUT_DEV" --output=$LOG_FILE
 
 # when this script is killed, also kill all sub-jobs
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
