@@ -5,5 +5,5 @@ set -ufx
 
 pkill node
 pkill -f bgrep
-pkill -f logkeys.log
 sudo logkeys --kill
+pkill -f logkeys.log
