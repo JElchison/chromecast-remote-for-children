@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -eufx
+# don't use -e, since we want to stop as many things as possible
+set -ufx
 
 sudo logkeys --kill
 sudo pkill -f 'sudo.*bgrep'
