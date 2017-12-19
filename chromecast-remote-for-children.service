@@ -1,0 +1,14 @@
+[Unit]
+Description=Chromecast Remote for Children
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/chromecast-remote-for-children
+ExecStart=/home/pi/chromecast-remote-for-children/start.sh
+ExecStop=/home/pi/chromecast-remote-for-children/stop.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
