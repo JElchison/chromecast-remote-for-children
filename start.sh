@@ -26,7 +26,7 @@ play_youtube_playlist_random() {
 
 # start keylogger
 touch $LOG_FILE
-chmod o+r $LOG_FILE
+sudo chmod o+r $LOG_FILE
 sudo logkeys --start --device="$INPUT_DEV"
 
 # when this script is killed, also kill all sub-jobs
