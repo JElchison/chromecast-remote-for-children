@@ -1,11 +1,13 @@
 # chromecast-remote-for-children
 Linux-based service that turns your wireless numpad keyboard into a pushbutton Chromecast remote for children
 
+
 ## Motivation
 I have a child about 1 year old, and he's always reaching for remotes and keyboards.  I thought it would be nice for him to have his own, but most are toys that (at best) only chime or beep when a button is pressed.  I thought it would be fun to hand my son his own remote that could actually control what he sees on the nearby screen.  (Cause and effect relationships, etc.)
 
 ### Disclaimer
 I am not necessarily advocating for screen time for little ones.  However, if a screen is already turned on nearby, this is an inventive way for me to avoid having to ward off my curious son incessantly.
+
 
 ## Features
 * Plays a designated YouTube video at the push of an associated button
@@ -22,12 +24,12 @@ I am not necessarily advocating for screen time for little ones.  However, if a 
 * Remove the battery from the remote
 * Unplug the keyboard dongle from the computer
 
+
 ## Functional Description
-This remote uses a keylogger ([logkeys](https://github.com/kernc/logkeys)) to capture keystrokes.  One process per key sequence reads through the captures keystrokes (using [bgrep](https://github.com/rsharo/bgrep)).  Upon detected key sequence, [castnow](https://github.com/xat/castnow) is used to play content on a nearby Chromecast instance.
+This remote uses a keylogger ([logkeys](https://github.com/kernc/logkeys)) to capture keystrokes from a specific (wireless) keyboard.  One process per key sequence scans through the captured keystrokes (using [bgrep](https://github.com/rsharo/bgrep)).  Upon detecting a key sequence, [castnow](https://github.com/xat/castnow) is used to play content on a nearby Chromecast instance.
+
 
 ## Hardware
-This project only covers the software that enables the remote to function.  You're on your own for the hardware.
-
 Hardware requirements:
 * Computer running Linux somewhere nearby where you desire the remote to function.  It need not be in the same room.  It need not be dedicated to this purpose.
     * If you desire a low-power solution, consider something like a [Raspberry Pi](https://www.raspberrypi.org/).
@@ -53,7 +55,10 @@ Here is the hardware I chose for my first remote:
 
 ![My first remote](https://user-images.githubusercontent.com/1757771/34083863-09bf807c-e345-11e7-8dd7-8f24f0d08d7c.jpg)
 
-The above photo pictures a 100% functioning remote running on a Raspberry Pi 3.  (I added the colored stickers to the keyboard.)  Not pictured is the Chromecast attached to my TV.
+The above photo pictures a 100% functioning remote running on a Raspberry Pi 3.  (I added the colored stickers to the keyboard.)
+
+(Obviously) not pictured is the Chromecast attached to my TV.  This will not work without a Chromecast properly configured to control a nearby screen.
+
 
 ## Raspberry Pi Setup
 
@@ -105,6 +110,7 @@ sudo /sbin/iptables -A INPUT -p tcp --match multiport --dports 4100:4105 -j ACCE
     * If running on a Raspberry Pi, ensure that you pull from master, including https://github.com/rsharo/bgrep/commit/4abd26576b519639f7be2560e28d169424630125
     * You can install from package manager if you're not on a Raspberry Pi
 
+
 ## Configuration
 
 Create a file named `config.json`, with contents like this:
@@ -119,7 +125,8 @@ Create a file named `config.json`, with contents like this:
 * `input_dev` is the device you want to collect keystrokes from.  You can learn this from running `sudo evtest`.
 * `chromecast_dev` is the Chromecast you want to play videos on.  You can learn this from running `avahi-discover`.  The GUID you're looking for is all of the text before the `.local` suffix (including any dashes).
 
-## Service
+
+## Service Installation
 
 The following steps install this as a service (so that it automatically starts upon boot).  It assumes that you have cloned the repo at `/home/pi/chromecast-remote-for-children/`
 * Copy the service file
@@ -235,23 +242,42 @@ To see logs from the service:
 journalctl -u chromecast-remote-for-children.service
 ```
 
+## Updating Dependencies
+
+If you run this service for a long time, you'll eventually want to update everything.  Use Git to update this repo to its latest.  Additionally...
+
+Update the OS:
+```
+sudo bash -c "apt -y update; apt -y upgrade && apt -y autoremove"
+```
+
+Update `pip` packages:
+```
+pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 sudo -H pip install -U
+```
+
+Update `npm` packages:
+```
+sudo npm update -g
+```
+
+Also, be sure to update anything you manually built, such as:
+* logkeys
+* bgrep
+
+
 ## Ideas for Future Work
 * Use numlock LED for status indicator
 ```
 sudo su -c 'setleds -L +num < /dev/console'
 sudo su -c 'setleds -L -num < /dev/console'
 ```
-* Lockout by time of day (parental control)
+* Parental control: Add configurable lockout by time of day (i.e. for bedtime)
 * Key sequence that causes remote to rotate between available Chromecasts on local network
 * Create "pages" of videos available for playing (mapped to letters marked on keyboard)
-* Move functionality in [start.sh](start.sh) to single Python script
-    * Key mappings move to config.json
-    * When run without any arguments, starts all processes
-        * One process per key sequence in JSON
-        * Process calls same script with triggered key sequence as argument
-    * When run with argument, passes to key sequence handler
-        * Looks up key sequence in JSON, performs associated action
-        * All actions passes to system() or equivalent
+    * Page "A" has numbers 0-9
+    * Page "B" has numbers 0-9, and so on...
+* Move key mappings to `config.json`
 
 Ideas for other keyboard mappings:
 * Include Easter egg (like when hit 1-9 in a row, or 1-2 buckle shoe)
