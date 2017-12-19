@@ -102,6 +102,7 @@ sudo /sbin/iptables -A INPUT -p tcp --match multiport --dports 4100:4105 -j ACCE
 * Compile https://github.com/kernc/logkeys from source (otherwise you'll see https://github.com/kernc/logkeys/issues/103)
     * You can install from package manager if you're not on a Raspberry Pi
 * Compile https://github.com/rsharo/bgrep from source
+    * If running on a Raspberry Pi, ensure that you pull from master, including https://github.com/rsharo/bgrep/commit/4abd26576b519639f7be2560e28d169424630125
     * You can install from package manager if you're not on a Raspberry Pi
 
 ## Configuration
