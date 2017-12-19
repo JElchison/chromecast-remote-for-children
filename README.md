@@ -22,6 +22,9 @@ I am not necessarily advocating for screen time for little ones.  However, if a 
 * Remove the battery from the remote
 * Unplug the keyboard dongle from the computer
 
+## Functional Description
+This remote uses a keylogger ([logkeys](https://github.com/kernc/logkeys)) to capture keystrokes.  One process per key sequence reads through the captures keystrokes (using [bgrep](https://github.com/rsharo/bgrep)).  Upon detected key sequence, [castnow](https://github.com/xat/castnow) is used to play content on a nearby Chromecast instance.
+
 ## Hardware
 This project only covers the software that enables the remote to function.  You're on your own for the hardware.
 
@@ -80,9 +83,6 @@ sudo apt upgrade
 sudo apt install unattended-upgrades
 sudo dpkg-reconfigure --priority=low unattended-upgrades
 ```
-
-## Functional Description
-This remote uses a keylogger ([logkeys](https://github.com/kernc/logkeys)) to capture keystrokes.  One process per key sequence reads through the captures keystrokes (using [bgrep](https://github.com/rsharo/bgrep)).  Upon detected key sequence, [castnow](https://github.com/xat/castnow) is used to play content on a nearby Chromecast instance.
 
 ## Installation
 
