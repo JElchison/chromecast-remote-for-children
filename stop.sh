@@ -4,6 +4,6 @@
 set -ufx
 
 pkill node
-sudo pkill -f 'sudo.*bgrep'
-sudo pkill -f logkeys.log
+pkill -f bgrep
+pkill -f logkeys.log
 sudo logkeys --kill
